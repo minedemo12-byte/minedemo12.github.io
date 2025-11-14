@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>衣次元｜舊衣升級平台示範網站</title>
+  <meta name="description" content="循衣 3D：以 3D 互動設計與社群，幫你把舊衣升級成新風格。這是示範用的展示網站。" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#">
+      <img src="assets/logo.svg" alt="循衣3D 標誌" width="32" height="32"/>
+      <span>衣次元</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#demo">示範</a>
+      <a href="#desinger">設計師</a>
+      <a href="#features">功能</a>
+      <a href="#how">如何運作</a>
+      <a href="#pricing">價格</a>
+      <a href="#workshops">工作坊</a>
+      <a href="#community">社群</a>
+      <a href="#partners">合作夥伴</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="#demo">立即開始</a>
+    </div>
+    <button class="nav-toggle" aria-label="開啟選單" aria-expanded="false">☰</button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>把舊衣升級成新風格——<span class="accent">於 3D 中即時預覽</span></h1>
+      <p>上傳一張舊衣照片，選擇模板與花紋，立刻在瀏覽器裡體驗 3D 視覺效果。這個網站為展示用原型，可作為簡報與投資說明的 Demo。</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#demo">上傳舊衣</a>
+        <a class="btn btn-ghost" href="#how">觀看流程</a>
+      </div>
+      <ul class="trust">
+        <li>♻️ 永續時尚</li>
+        <li>🧵 DIY 套件</li>
+        <li>👗 專業設計服務</li>
+      </ul>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="blob"></div>
+      <img class="hero-mock" src="assets/hero-mock.svg" alt="" />
+    </div>
+  </section>
+
+  <section id="demo" class="demo section">
+    <h2>互動示範：<span class="accent">把你的布料放進 3D</span></h2>
+    <p class="sub">上傳舊衣照片或使用內建花紋產生器，拖曳旋轉視角，下載快照作為提案素材。</p>
+    <div class="demo-grid">
+      <form class="panel controls" onsubmit="return false;">
+        <div class="group">
+          <label for="upload">上傳舊衣照片（JPG/PNG）</label>
+          <input id="upload" type="file" accept="image/*" />
+        </div>
+        <div class="group">
+          <label>花紋產生器</label>
+          <select id="pattern">
+            <option value="solid">素色</option>
+            <option value="stripes">條紋</option>
+            <option value="checks">格紋</option>
+            <option value="dots">波點</option>
+          </select>
+        </div>
+        <div class="group two">
+          <div>
+            <label for="color1">主色</label>
+            <input id="color1" type="color" value="#3F8C6B" />
+          </div>
+          <div>
+            <label for="color2">副色</label>
+            <input id="color2" type="color" value="#FFFFFF" />
+          </div>
+        </div>
+        <div class="group">
+          <label>效果</label>
+          <div class="checks">
+            <label><input id="wave" type="checkbox" checked> 模擬布料飄動</label>
+            <label><input id="lighting" type="checkbox" checked> 實時打光</label>
+          </div>
+        </div>
+        <div class="group">
+          <button id="download" class="btn btn-primary" type="button">下載 3D 快照</button>
+          <button id="reset" class="btn btn-ghost" type="button">重設</button>
+        </div>
+      </form>
+      <div class="panel canvas-wrap">
+        <canvas id="glcanvas" aria-label="3D 預覽畫面" role="img"></canvas>
+        <div class="before-after">
+          <input id="slider" type="range" min="0" max="100" value="50" aria-label="前後對比滑桿" />
+        </div>
+      </div>
+      <!-- ---------- 設計師搜尋 / 推薦 ---------- -->
+      <div id="desinger" class="group" style="margin-top: 40px;">
+        <h2 for="designerQuery" style="font-size: 24px;">搜尋設計師（輸入風格，如：極簡 / 街頭 / 復古）</h2>
+        <div style="display:flex;gap:.5rem; width: 90vw;">
+          <input id="designerQuery" type="text" placeholder="輸入風格關鍵字" style="flex:1;padding:.5rem;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text)"/>
+          <button id="recommendBtn" class="btn" type="button">推薦</button>
+        </div>
+        <div id="designersContainer" style="margin-top:12px; width: 90vw"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features section">
+    <h2>平台功能</h2>
+    <div class="cards">
+      <article class="card"><h3>3D 即時預覽</h3><p>拖曳旋轉、縮放、調整布料參數，快速試錯與對比。</p></article>
+      <article class="card"><h3>AI 設計建議</h3><p>依據你的衣料與喜好，推薦剪裁與花紋搭配（正式版）。</p></article>
+      <article class="card"><h3>模板庫</h3><p>常見服裝版型一鍵套用，支援自訂尺寸。</p></article>
+      <article class="card"><h3>DIY 材料包</h3><p>一鍵下單所需材料工具與教學，降低入門門檻。</p></article>
+      <article class="card"><h3>專業設計改造服務</h3><p>由合作設計師提供設計服務。</p> <p style="font-size: small;">(學生設計師：$50 專業設計師：$300)</p> </article>
+      <article class="card"><h3>社群與任務</h3><p>挑戰賽、作品牆、徽章與積分，促進回訪與口碑（正式版）。</p></article>
+    </div>
+  </section>
+
+  <section id="how" class="how section">
+    <h2>如何運作</h2>
+    <ol class="steps" style="display: flex;">
+      <li><span style="float: left;">1</span> 上傳舊衣照片或選擇布料樣式</li>
+      <li><span style="float: left;">2</span> 輸入想要的設計師風格，平台推薦該風格的設計師給用戶</li>
+      <li><span style="float: left;">3</span> 設計師返回3D設計圖，用戶根據教程輕鬆改造舊衣</li>
+      <li><span style="float: left;">4</span> 分享作品到社群、累積積分與回饋</li>
+    </ol>
+  </section>
+
+  <section id="pricing" class="pricing section">
+    <h2>價格方案</h2>
+    <div class="prices">
+      <div class="price-card">
+        <h3>基礎版</h3>
+        <p class="price"><span class="num" data-month="0" data-year="0">$19 ~ $39</span> / 月</p>
+        <ul>
+          <li>T卹改購物袋</li>
+          <li>剪裁變短</li>
+          <li>簡單圖案印花</li>
+          <li>簡單教程，30分鐘內完成</li>
+        </ul>
+        <button class="btn btn-ghost">立即使用</button>
+      </div>
+      <div class="price-card highlight">
+        <h3>標準版</h3>
+        <p class="price"><span class="num" data-month="69" data-year="58">$49 ~ $99</span> / 月</p>
+        <ul>
+          <li>牛仔褲改包</li>
+          <li>襯衫改連衣裙</li>
+          <li>加入基礎拼接</li>
+          <li>詳細教程，1-3小時完成</li>
+        </ul>
+        <button class="btn btn-primary">開始 7 天試用</button>
+      </div>
+      <div class="price-card">
+        <h3>複雜/設計師款</h3>
+        <p class="price"><span class="num" data-month="199" data-year="166">$129 ~ $299+</span> / 月</p>
+        <ul>
+          <li>多件舊衣拼接成新衣</li>
+          <li>複雜結構改造、高度個人化設計</li>
+          <li>專業教程</li>
+        </ul>
+        <button class="btn btn-ghost">聯絡我們</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="workshops" class="workshops section">
+    <h2>工作坊與課程</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>入門：手縫與簡易改造</h3>
+        <p>線上直播｜每月第二週三｜90 分鐘</p>
+        <button class="btn btn-ghost">預約名額</button>
+      </article>
+      <article class="card">
+        <h3>進階：打版與結構</h3>
+        <p>實體課｜小班制｜含材料包</p>
+        <button class="btn btn-ghost">查看梯次</button>
+      </article>
+      <article class="card">
+        <h3>設計挑戰賽</h3>
+        <p>社群合作｜投稿抽獎與徽章</p>
+        <button class="btn btn-ghost">參加活動</button>
+      </article>
+    </div>
+  </section>
+
+  <section id="community" class="community section">
+    <h2>社群亮點</h2>
+    <div class="gallery">
+      <div class="tile"></div>
+      <div class="tile"></div>
+      <div class="tile"></div>
+      <div class="tile"></div>
+      <div class="tile"></div>
+      <div class="tile"></div>
+    </div>
+  </section>
+
+  <section id="partners" class="partners section">
+    <h2>合作夥伴</h2>
+    <div class="logo-row">
+      <img src="assets/partner1.svg" alt="Partner 1" />
+      <img src="assets/partner2.svg" alt="Partner 2" />
+      <img src="assets/partner3.svg" alt="Partner 3" />
+      <img src="assets/partner4.svg" alt="Partner 4" />
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-line">
+          <img src="assets/logo.svg" alt="循衣3D 標誌" width="28" height="28"/>
+          <strong>衣次元</strong>
+        </div>
+        <p>以設計驅動的永續平台，讓每件舊衣都有第二次生命。</p>
+      </div>
+      <div>
+        <h4>公司</h4>
+        <ul>
+          <li><a href="#">關於我們</a></li>
+          <li><a href="#">媒體資源</a></li>
+          <li><a href="#">徵才</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>支援</h4>
+        <ul>
+          <li><a href="#">常見問題</a></li>
+          <li><a href="#">聯絡客服</a></li>
+          <li><a href="#">隱私與條款</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>訂閱電子報</h4>
+        <form class="newsletter" onsubmit="return false;">
+          <input type="email" placeholder="輸入你的 Email" aria-label="Email" />
+          <button class="btn btn-primary">訂閱</button>
+        </form>
+      </div>
+    </div>
+    <div class="copy">© <span id="year"></span>衣次元 — 示範網站</div>
+  </footer>
+
+  <!-- 主程式（使用 ESM 與 CDN） -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

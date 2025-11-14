@@ -1,0 +1,196 @@
+/* ========== 基本樣式 ========== */
+:root{
+  --bg: #0E1116; --panel:#141923; --muted:#9AA3AF; --text:#E5E7EB; --accent:#23C08B; --accent-2:#7C3AED;
+  --line:#1F2937; --card:#111827; --shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans TC,Arial,"Apple Color Emoji","Segoe UI Emoji";}
+a{color:inherit;text-decoration:none}
+.section{padding:72px 20px;max-width:1200px;margin:0 auto}
+.accent{color:var(--accent)}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.75rem 1rem;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+  /* smooth hover animation: scale, shadow and color transitions */
+  transition: transform .18s cubic-bezier(.2,.9,.3,1),
+              box-shadow .18s ease,
+              background-color .18s ease,
+              border-color .18s ease,
+              color .18s ease;
+  will-change: transform, box-shadow;
+}
+.btn:hover{
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 20px rgba(10,15,20,0.45);
+  border-color: rgba(74,222,128,0.9); /* highlight color on hover */
+}
+.btn:active{
+  transform: translateY(0) scale(0.99);
+}
+.btn:focus-visible{
+  outline: 2px solid rgba(74,222,128,0.18);
+  outline-offset: 3px;
+}
+
+/* Primary / ghost specific tweaks */
+.btn-primary{
+  background: linear-gradient(135deg,var(--accent),#4ADE80);
+  color:#082a1f;
+  border:none;
+  transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s ease, filter .18s ease;
+}
+.btn-primary:hover{
+  filter: brightness(1.04);
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 10px 28px rgba(74,222,128,0.18);
+}
+
+.btn-ghost{
+  background:transparent;
+  transition: transform .18s cubic-bezier(.2,.9,.3,1), border-color .18s ease, box-shadow .18s ease;
+}
+.btn-ghost:hover{
+  transform: translateY(-2px) scale(1.03);
+  border-color: #3b4656;
+  box-shadow: 0 6px 18px rgba(11,13,17,0.38);
+}
+
+/* small action buttons (designer profile etc.) */
+.view-profile{
+  margin-top:6px;
+  padding:.4rem .6rem;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+  transition: transform .15s ease, background-color .15s ease, border-color .15s ease;
+  display:inline-block;
+}
+.view-profile:hover{
+  transform: scale(1.06);
+  background: rgba(74,222,128,0.06);
+  border-color: rgba(74,222,128,0.2);
+}
+
+/* ========== 導覽列 ========== */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:12px 20px;border-bottom:1px solid var(--line);backdrop-filter: blur(8px);background: rgba(14,17,22,.7)}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+.nav-links{display:flex;gap:1rem}
+.nav-cta{display:flex}
+.nav-toggle{display:none;background:transparent;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:.4rem .6rem}
+
+@media (max-width:900px){
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+}
+
+/* ========== Hero ========== */
+.hero{max-width:1200px;margin:0 auto;padding:72px 20px;display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:2rem}
+.hero-text h1{font-size:clamp(28px,3.2vw,44px);line-height:1.15;margin:.2rem 0 1rem}
+.hero-text p{color:var(--muted)}
+.hero-ctas{display:flex;gap:.8rem;margin:1.2rem 0}
+.trust{display:flex;gap:1rem;color:var(--muted);padding:0;list-style:none;margin-top:.5rem}
+.hero-visual{position:relative}
+.hero-visual .blob{position:absolute;inset:auto 0 0 0;height:260px;background:radial-gradient(600px 200px at 60% 50%, rgba(124,58,237,.2), transparent), radial-gradient(500px 220px at 20% 20%, rgba(35,192,139,.2), transparent)}
+.hero-mock{width:100%;max-width:520px;filter:drop-shadow(0 40px 60px rgba(0,0,0,.35))}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+}
+
+/* ========== Demo ========== */
+.demo .demo-grid{display:grid;grid-template-columns:360px 1fr;gap:1rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.controls .group{margin-bottom:14px}
+.controls label{display:block;margin-bottom:6px;color:var(--muted)}
+.controls .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.controls .seg input{display:none}
+.controls .seg label{border:1px solid var(--line);padding:.5rem;border-radius:8px;text-align:center;cursor:pointer}
+.controls .seg input:checked + label{background:#1c2432}
+.controls .two{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.controls .checks{display:flex;gap:1rem;color:var(--muted)}
+.controls .hint{color:var(--muted);font-size:.9rem}
+.canvas-wrap{position:relative;min-height:420px;display:grid}
+#glcanvas{width:100%;height:420px;border-radius:12px;background:linear-gradient(180deg,#0b0e14,#0e1320);border:1px solid var(--line)}
+.before-after{position:absolute;inset:auto 12px 12px 12px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#0a0f18}
+.before-after img{display:block;width:100%;height:160px;object-fit:cover;opacity:.9}
+.before-after .after-mask{position:absolute;inset:0;width:50%;overflow:hidden;border-right:1px solid rgba(255,255,255,.2)}
+.before-after input[type=range]{position:absolute;left:0;right:0;bottom:0;width:100%}
+
+@media (max-width:1000px){
+  .demo .demo-grid{grid-template-columns:1fr}
+}
+
+/* ========== Features/How/Pricing ========== */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{margin:.2rem 0 .6rem}
+@media (max-width:900px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.cards{grid-template-columns:1fr}}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;list-style:none;padding:0}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.steps span{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#1f2937;margin-right:.5rem}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.steps{grid-template-columns:1fr}}
+
+.pricing .price-toggle{display:flex;align-items:center;gap:.6rem;justify-content:center;margin-bottom:16px;color:var(--muted)}
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.price-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:.6rem}
+.price-card .price{color:var(--muted)}
+.price-card .num{font-size:2rem;color:#fff}
+.price-card.highlight{border-color:rgba(35,192,139,.4);box-shadow:0 0 0 1px rgba(35,192,139,.25) inset}
+
+.switch{position:relative;display:inline-block;width:50px;height:26px}
+.switch input{opacity:0;width:0;height:0}
+.switch .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#243041;border-radius:30px}
+.switch .slider:before{content:"";position:absolute;height:20px;width:20px;left:3px;top:3px;background:white;border-radius:50%;transition:transform .2s}
+.switch input:checked + .slider:before{transform:translateX(24px)}
+
+/* ========== 社群/夥伴/頁腳 ========== */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{aspect-ratio:1;border-radius:12px;background:
+  linear-gradient(135deg,rgba(124,58,237,.3),transparent),
+  linear-gradient(45deg,rgba(35,192,139,.3),transparent),
+  url('assets/pattern-dot.svg');
+  background-size:cover;opacity:.9;border:1px solid var(--line)}
+.logo-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;align-items:center;justify-items:center}
+.logo-row img{max-width:140px;opacity:.9;filter:grayscale(1)}
+.footer{border-top:1px solid var(--line);padding:28px 20px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:1rem;max-width:1200px;margin:0 auto}
+.footer-grid h4{margin:.2rem 0 .6rem}
+.footer-grid ul{list-style:none;padding:0;margin:0}
+.footer-grid li{margin:.3rem 0}
+.newsletter{display:flex;gap:.6rem}
+.newsletter input{flex:1;border:1px solid var(--line);background:#0b0f16;color:#fff;border-radius:8px;padding:.6rem}
+.copy{max-width:1200px;margin:10px auto 0;color:var(--muted)}
+
+@media (max-width:900px){
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* 設計師卡片 */
+.designer-card{display:flex;gap:.8rem;align-items:center;padding:.6rem;border-radius:10px;border:1px solid var(--line);background:linear-gradient(180deg,#0f1620,#0b1116);margin-bottom:8px}
+.designer-avatar{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid rgba(255,255,255,.04)}
+.designer-info{flex:1}
+.designer-info strong{display:block}
+.designer-styles{color:var(--muted);font-size:.85rem;margin:.25rem 0}
+.designer-bio{color:var(--muted);font-size:.85rem;margin:.25rem 0}
+.view-profile{margin-top:6px;padding:.4rem .6rem;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer}
+
+/* 平滑捲動（anchor 跳轉）*/
+html { scroll-behavior: smooth; }
+
+/* 避免被 sticky header 擋住目標區塊（視 header 高度調整） */
+section { scroll-margin-top: 80px; }
