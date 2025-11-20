@@ -9,35 +9,36 @@ let renderer, scene, camera, controls, mesh, light1, light2;
 let waveEnabled = true;
 let lightingEnabled = true;
 let t = 0;
+let patternTex = null; // <--- added: shared texture for the model
 
 // 建立離屏畫布作為花紋材質來源
 const patternCanvas = document.createElement('canvas');
 patternCanvas.width = 512; patternCanvas.height = 512;
 const pctx = patternCanvas.getContext('2d');
 
-function drawPattern(type, c1, c2){
-  const w = patternCanvas.width, h = patternCanvas.height;
-  // 背景
-  pctx.fillStyle = c1; pctx.fillRect(0,0,w,h);
-  pctx.fillStyle = c2; pctx.strokeStyle = c2;
-  if(type === 'stripes'){
-    for(let i=0;i<20;i++){
-      const y = i * (h/20);
-      pctx.fillRect(0,y, w, (h/40));
-    }
-  }else if(type === 'checks'){
-    for(let i=0;i<10;i++){
-      for(let j=0;j<10;j++){
-        if((i+j)%2===0) pctx.fillRect(i*(w/10), j*(h/10), w/10, h/10);
-      }
-    }
-  }else if(type === 'dots'){
-    for(let i=0;i<100;i++){
-      const x = Math.random()*w, y = Math.random()*h, r = 6 + Math.random()*10;
-      pctx.beginPath(); pctx.arc(x,y,r,0,Math.PI*2); pctx.fill();
-    }
-  } else { /* solid */ }
-}
+function drawPattern(type, c1){
+   const w = patternCanvas.width, h = patternCanvas.height;
+   // 背景
+   pctx.fillStyle = c1; pctx.fillRect(0,0,w,h);
+   pctx.fillStyle = c1; pctx.strokeStyle = c1;
+   if(type === 'stripes'){
+     for(let i=0;i<20;i++){
+       const y = i * (h/20);
+       pctx.fillRect(0,y, w, (h/40));
+     }
+   }else if(type === 'checks'){
+     for(let i=0;i<10;i++){
+       for(let j=0;j<10;j++){
+         if((i+j)%2===0) pctx.fillRect(i*(w/10), j*(h/10), w/10, h/10);
+       }
+     }
+   }else if(type === 'dots'){
+     for(let i=0;i<100;i++){
+       const x = Math.random()*w, y = Math.random()*h, r = 6 + Math.random()*10;
+       pctx.beginPath(); pctx.arc(x,y,r,0,Math.PI*2); pctx.fill();
+     }
+   } else { /* solid */ }
+ }
 
 function init(){
   // ensure canvas exists (module might run before DOM)
@@ -70,7 +71,7 @@ function init(){
     mesh.position.set(0, 0.2, 0);
     
     // Create texture once
-    const patternTex = new THREE.CanvasTexture(patternCanvas);
+    patternTex = new THREE.CanvasTexture(patternCanvas);
     patternTex.wrapS = patternTex.wrapT = THREE.RepeatWrapping;
     patternTex.repeat.set(1.6, 1.6);
     
@@ -148,7 +149,6 @@ window.addEventListener('resize', ()=>{
 const upload = document.getElementById('upload');
 const patternSel = document.getElementById('pattern');
 const color1 = document.getElementById('color1');
-const color2 = document.getElementById('color2');
 const wave = document.getElementById('wave');
 const lighting = document.getElementById('lighting');
 const dl = document.getElementById('download');
@@ -228,10 +228,24 @@ if(recommendBtn && designerQuery && designersContainer){
   renderDesignerCards(designersContainer, designers.slice(0,4));
 }
 
+// 更新材質紋理（從花紋畫布）
+function updateTextureFromPattern(){
+  // redraw pattern canvas from current UI values
+  drawPattern(patternSel ? patternSel.value : 'solid', color1 ? color1.value : '#3F8C6B');
+  if(patternTex){
+    patternTex.needsUpdate = true;
+  }
+ }
+
+// Hook UI controls to update texture live
+if(patternSel) patternSel.addEventListener('change', updateTextureFromPattern);
+if(color1) color1.addEventListener('input', updateTextureFromPattern);
+// if(color2) color2.addEventListener('input', updateTextureFromPattern);
+
 // 初始化內容
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();
-  drawPattern('solid', color1.value, color2.value);
+  drawPattern('solid', color1.value);
   init();
   updateTextureFromPattern();
 })();
