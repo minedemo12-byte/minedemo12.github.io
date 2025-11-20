@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>衣次元｜舊衣升級平台示範網站</title>
+  <title>衣次元｜舊衣升級平台網站</title>
   <meta name="description" content="循衣 3D：以 3D 互動設計與社群，幫你把舊衣升級成新風格。這是示範用的展示網站。" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/icon.jpg">
 </head>
 <body>
   <header class="nav">
     <a class="brand" href="#">
-      <img src="assets/logo.svg" alt="循衣3D 標誌" width="32" height="32"/>
+      <img src="assets/icon.jpg" alt="循衣3D 標誌" width="32" height="32"/>
       <span>衣次元</span>
     </a>
     <nav class="nav-links">
@@ -31,8 +32,9 @@
 
   <section class="hero">
     <div class="hero-text">
-      <h1>把舊衣升級成新風格——<span class="accent">於 3D 中即時預覽</span></h1>
-      <p>上傳一張舊衣照片，選擇模板與花紋，立刻在瀏覽器裡體驗 3D 視覺效果。這個網站為展示用原型，可作為簡報與投資說明的 Demo。</p>
+      <h1><span class="accent">衣次元</span></h1>
+      <h1>把舊衣升級成新風格——<span class="accent">於 3D 中即時預覽效果</span></h1>
+      <p>上傳一張舊衣照片，立刻在瀏覽器裡體驗 3D 視覺效果。</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="#demo">上傳舊衣</a>
         <a class="btn btn-ghost" href="#how">觀看流程</a>
@@ -45,7 +47,7 @@
     </div>
     <div class="hero-visual" aria-hidden="true">
       <div class="blob"></div>
-      <img class="hero-mock" src="assets/hero-mock.svg" alt="" />
+      <img class="hero-mock" src="assets/icon.jpg" alt="" style="border-radius: 10%; height: 70vh; width: auto;"/>
     </div>
   </section>
 
@@ -58,7 +60,7 @@
           <label for="upload">上傳舊衣照片（JPG/PNG）</label>
           <input id="upload" type="file" accept="image/*" />
         </div>
-        <div class="group">
+        <!-- <div class="group">
           <label>花紋產生器</label>
           <select id="pattern">
             <option value="solid">素色</option>
@@ -66,15 +68,11 @@
             <option value="checks">格紋</option>
             <option value="dots">波點</option>
           </select>
-        </div>
+        </div> -->
         <div class="group two">
           <div>
-            <label for="color1">主色</label>
+            <label for="color1">顏色</label>
             <input id="color1" type="color" value="#3F8C6B" />
-          </div>
-          <div>
-            <label for="color2">副色</label>
-            <input id="color2" type="color" value="#FFFFFF" />
           </div>
         </div>
         <div class="group">
@@ -188,7 +186,7 @@
     </div>
   </section>
 
-  <section id="community" class="community section">
+  <!-- <section id="community" class="community section">
     <h2>社群亮點</h2>
     <div class="gallery">
       <div class="tile"></div>
@@ -198,9 +196,9 @@
       <div class="tile"></div>
       <div class="tile"></div>
     </div>
-  </section>
+  </section> -->
 
-  <section id="partners" class="partners section">
+  <!-- <section id="partners" class="partners section">
     <h2>合作夥伴</h2>
     <div class="logo-row">
       <img src="assets/partner1.svg" alt="Partner 1" />
@@ -208,7 +206,7 @@
       <img src="assets/partner3.svg" alt="Partner 3" />
       <img src="assets/partner4.svg" alt="Partner 4" />
     </div>
-  </section>
+  </section> -->
 
   <footer class="footer">
     <div class="footer-grid">
@@ -243,7 +241,7 @@
         </form>
       </div>
     </div>
-    <div class="copy">© <span id="year"></span>衣次元 — 示範網站</div>
+    <div class="copy">© <span id="year"></span>衣次元</div>
   </footer>
 
   <!-- 主程式（使用 ESM 與 CDN） -->
