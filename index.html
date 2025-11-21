@@ -186,6 +186,48 @@
     </div>
   </section>
 
+  <!-- ========== 分享與評論區 ========== -->
+  <section id="reviews" class="reviews section">
+    <h2>分享與評論</h2>
+    <p class="sub">留下你的改造心得與照片，和社群分享。</p>
+    <div class="demo-grid" style="gap:1rem;">
+      <form id="reviewForm" class="panel controls" onsubmit="return false;">
+        <div class="group">
+          <label for="reviewName">名稱（選填）</label>
+          <input id="reviewName" type="text" placeholder="你的名稱" />
+        </div>
+        <div class="group">
+          <label for="reviewText">心得</label>
+          <textarea id="reviewText" rows="3" required placeholder="寫下你的體驗..."></textarea>
+        </div>
+        <div class="group two">
+          <div>
+            <label for="reviewRating">評分</label>
+            <select id="reviewRating">
+              <option value="5">★★★★★</option>
+              <option value="4">★★★★☆</option>
+              <option value="3">★★★☆☆</option>
+              <option value="2">★★☆☆☆</option>
+              <option value="1">★☆☆☆☆</option>
+            </select>
+          </div>
+          <div>
+            <label for="reviewImage">上傳照片（選填）</label>
+            <input id="reviewImage" type="file" accept="image/*" />
+          </div>
+        </div>
+        <div class="group">
+          <button id="submitReview" class="btn btn-primary" type="button">發布</button>
+          <button id="clearReviews" class="btn btn-ghost" type="button"></button>
+        </div>
+      </form>
+
+      <div id="reviewsList" class="panel" style="min-height:120px;">
+        <!-- 使用者評論會顯示在這裡 -->
+      </div>
+    </div>
+  </section>
+
   <!-- <section id="community" class="community section">
     <h2>社群亮點</h2>
     <div class="gallery">
@@ -246,5 +288,104 @@
 
   <!-- 主程式（使用 ESM 與 CDN） -->
   <script type="module" src="app.js"></script>
+
+  <script>
+  (function(){
+    const STORAGE_KEY = 'upcycle_reviews_v1';
+    const form = document.getElementById('reviewForm');
+    const nameEl = document.getElementById('reviewName');
+    const textEl = document.getElementById('reviewText');
+    const ratingEl = document.getElementById('reviewRating');
+    const imageEl = document.getElementById('reviewImage');
+    const submitBtn = document.getElementById('submitReview');
+    const clearBtn = document.getElementById('clearReviews');
+    const listEl = document.getElementById('reviewsList');
+
+    let reviews = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+    // 如果沒有本地評論，加入示範留言
+    if(!reviews || reviews.length === 0){
+      reviews = [
+        {
+          id: Date.now() - 259200000,
+          name: '思思',
+          text: '第一次用就上手！3D 預覽很直觀，幫我決定了改造方向。',
+          rating: 5,
+          ts: Date.now() - 259200000,
+          image: null
+        },
+        {
+          id: Date.now() - 172800000,
+          name: 'Jasper',
+          text: '原來跟着教程改造舊衣這麼簡單。已經推薦給朋友了。',
+          rating: 4,
+          ts: Date.now() - 172800000,
+          image: null
+        },
+        {
+          id: Date.now() - 86400000,
+          name: '小美',
+          text: '設計師推薦功能很棒，找到了適合我風格的設計師。改造後的牛仔褲包包超實用！',
+          rating: 5,
+          ts: Date.now() - 86400000,
+          image: null
+        },
+        {
+          id: Date.now() - 43200000,
+          name: '阿傑',
+          text: '教程清晰易懂，不是設計科系也能上手。',
+          rating: 4,
+          ts: Date.now() - 43200000,
+          image: null
+        }
+      ];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+    }
+
+    function render(){
+      listEl.innerHTML = reviews.length ? reviews.map(r => {
+        return `<div style="border-bottom:1px solid var(--line);padding:.6rem 0;">
+                  <div style="display:flex;gap:.6rem;align-items:flex-start;">
+                    ${r.image ? `<img src="${r.image}" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">` : ''}
+                    <div style="flex:1;">
+                      <strong>${r.name || '匿名'}</strong>
+                      <div style="color:var(--muted)">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+                      <div style="margin-top:.4rem;">${escapeHtml(r.text)}</div>
+                      <div style="color:var(--muted);font-size:12px;margin-top:.3rem;">${new Date(r.ts).toLocaleString()}</div>
+                    </div>
+                  </div>
+                </div>`;
+      }).join('') : '<div style="color:var(--muted)">尚無評論，成為第一個分享的人吧！</div>';
+    }
+
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]); }
+
+    submitBtn.addEventListener('click', ()=>{
+      const text = textEl.value.trim();
+      if(!text) return alert('請輸入心得內容。');
+      const name = nameEl.value.trim();
+      const rating = parseInt(ratingEl.value,10) || 5;
+      const file = imageEl.files[0];
+      const review = { id: Date.now(), name, text, rating, ts: Date.now(), image: null };
+
+      if(file){
+        const reader = new FileReader();
+        reader.onload = ()=>{ review.image = reader.result; reviews.unshift(review); localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews)); render(); form.reset(); };
+        reader.readAsDataURL(file);
+      } else {
+        reviews.unshift(review);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+        render(); form.reset();
+      }
+    });
+
+    clearBtn.addEventListener('click', ()=>{
+      if(!confirm('確定要清除所有本地評論嗎？')) return;
+      reviews = []; localStorage.removeItem(STORAGE_KEY); render();
+    });
+
+    render();
+  })();
+  </script>
 </body>
 </html>
