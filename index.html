@@ -46,7 +46,15 @@
     </div>
     <div class="hero-visual" aria-hidden="true">
       <div class="blob"></div>
-      <img class="hero-mock" src="assets/icon.jpg" alt="" style="border-radius: 10%; height: 70vh; width: auto;"/>
+      <div class="hero-mock-wrap" style="display:flex;align-items:center;justify-content:center;padding:1rem;">
+        <img
+          class="hero-mock"
+          src="assets/icon.jpg"
+          alt="示範圖"
+          loading="lazy"
+          style="border-radius:10%; width:100%; max-width:420px; height:auto; max-height:70vh; object-fit:contain; display:block;"
+        />
+      </div>
     </div>
   </section>
 
@@ -130,34 +138,36 @@
     <h2>價格方案</h2>
     <div class="prices">
       <div class="price-card">
-        <h3>基礎版</h3>
-        <p class="price"><span class="num" data-month="0" data-year="0">$19 ~ $39</span> / 次</p>
+        <h3>入門級</h3>
+        <p class="price"><span class="num" data-month="0" data-year="0">$99-$199</span> / 次</p>
         <ul>
-          <li>T卹改購物袋</li>
-          <li>剪裁變短</li>
-          <li>簡單圖案印花</li>
-          <li>簡單教程，30分鐘內完成</li>
+          <li>3D設計圖</li>
+          <li>所需材料清單</li>
+          <li>教程（圖文指南）</li>
+          <li>可修改1次</li>
         </ul>
         <button class="btn btn-ghost">立即使用</button>
       </div>
       <div class="price-card highlight">
-        <h3>標準版</h3>
-        <p class="price"><span class="num" data-month="69" data-year="58">$49 ~ $99</span> / 次</p>
+        <h3>標準級</h3>
+        <p class="price"><span class="num" data-month="69" data-year="58">$200-$499</span> / 次</p>
         <ul>
-          <li>牛仔褲改包</li>
-          <li>襯衫改連衣裙</li>
-          <li>加入基礎拼接</li>
-          <li>詳細教程，1-3小時完成</li>
+          <li>3D設計圖</li>
+          <li>所需材料清單</li>
+          <li>教程（高清視頻）</li>
+          <li>可修改3次</li>
         </ul>
-        <button class="btn btn-primary">開始 7 天試用</button>
+        <button class="btn btn-primary">立即使用</button>
       </div>
       <div class="price-card">
-        <h3>複雜/設計師款</h3>
-        <p class="price"><span class="num" data-month="199" data-year="166">$129 ~ $299+</span> / 次</p>
+        <h3>設計師級</h3>
+        <p class="price"><span class="num" data-month="199" data-year="166">$500+</span> / 次</p>
         <ul>
-          <li>多件舊衣拼接成新衣</li>
-          <li>複雜結構改造、高度個人化設計</li>
-          <li>專業教程</li>
+          <li>3D設計圖</li>
+          <li>所需材料清單</li>
+          <li>教學視頻</li>
+          <li>生產前無限次修改</li>
+          <li>設計師代工</li>
         </ul>
         <button class="btn btn-ghost">聯絡我們</button>
       </div>
